@@ -4,7 +4,8 @@
   "description": "Semver-oriented TypeScript library skeleton.",
   "main": "dist/index.js",
   "bin": {
-    "read.json": "dist/cli.js"
+    "read.json": "dist/cli.js",
+    "read_json": "dist/cli.js"
   },
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
