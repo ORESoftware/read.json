@@ -1,0 +1,36 @@
+{
+  "name": "@oresoftware/read.json",
+  "version": "0.0.101",
+  "description": "Semver-oriented TypeScript library skeleton.",
+  "main": "dist/index.js",
+  "bin": {
+    "read.json": "dist/cli.js"
+  },
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "test": "suman test",
+    "postinstall": "./assets/postinstall.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ORESoftware/read.json.git"
+  },
+  "keywords": [
+    "typescript",
+    "library",
+    "skeleton",
+    "scaffold"
+  ],
+  "author": "TODO Yo.Mama",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/ORESoftware/read.json/issues"
+  },
+  "homepage": "https://github.com/ORESoftware/read.json#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/core-js": "^0.9.46",
+    "@types/node": "^9.6.2"
+  }
+}

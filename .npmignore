@@ -1,0 +1,26 @@
+
+### folders
+node_modules
+scripts
+test
+.idea
+.vscode
+coverage
+.nyc_output
+build/Release
+src
+
+### files
+.editorconfig
+.gitattributes
+.gitignore
+.npmignore
+.travis.yml
+suman.conf.js
+
+### matching
+*.log
+*.md
+*.json
+*.DS_Store
+
