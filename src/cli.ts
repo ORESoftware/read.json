@@ -2,32 +2,46 @@
 'use strict';
 
 import path = require('path');
-let pkg = process.argv[2];
+import chalk from 'chalk';
+
+let jsonFile = process.argv[2];
 let keyv = process.argv[3] || '';
 
-if (!pkg) {
-  throw new Error('must pass a path to package.json');
+if (!jsonFile) {
+  throw chalk.magentaBright.bold('read.json: Must pass a path to a json file as the first argument.');
 }
 
-if (!path.isAbsolute(pkg)) {
-  pkg = path.resolve(process.cwd() + '/' + pkg);
+if (!path.isAbsolute(jsonFile)) {
+  jsonFile = path.resolve(process.cwd() + '/' + jsonFile);
 }
 
-const pkgJSON = require(pkg);
-const keys = String(keyv).split('.').filter(Boolean);
+if (!keyv) {
+  throw chalk.magentaBright.bold('read.json: Must pass a keypath to read as the second argument.');
+}
+
+let obj = null;
 
 try {
-  
-  let result = keys.reduce(function (a, b) {
-    return a[b] || '';
-  }, pkgJSON);
-  
-  if (typeof result !== 'string') {
-    result = JSON.stringify(result);
-  }
-  
-  console.log(result);
+  obj = require(jsonFile);
+
 }
 catch (err) {
-  console.error(err.message);
+  console.error(chalk.magenta('read.json: Could not load json file at path:'), chalk.magenta.bold(jsonFile));
+  throw err.message;
 }
+
+const expression = `obj[keyv]`;
+try {
+  const value = eval(expression);
+  if(value === undefined){
+    throw 'read.json: Accessed value was undefined - missing property/path.'
+  }
+  console.log(JSON.stringify(value));
+}
+catch (err) {
+  console.error(chalk.magenta(`read.json: Could not evaluate expression - could not read property: "${keyv}".`));
+  console.error(chalk.magentaBright(`read.json: You may wish to use "'${keyv}'" instead of "${keyv}".`));
+  throw err.message || err;
+}
+
+
