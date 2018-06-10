@@ -21,9 +21,16 @@ mkdir -p "$HOME/.oresoftware" || {
   exit 1;
 }
 
-
 (
-    cat "node_modules/@oresoftware/shell/assets/shell.sh" > "$HOME/.oresoftware/shell.sh" && {
+
+    shell_file="node_modules/@oresoftware/shell/assets/shell.sh";
+    [ -f "$shell_file" ] && cat "$shell_file" > "$HOME/.oresoftware/shell.sh" && {
+        echo "Successfully copied @oresoftware/shell/assets/shell.sh to $HOME/.oresoftware/shell.sh";
+        exit 0;
+    }
+
+    shell_file="../shell/assets/shell.sh";
+    [ -f "$shell_file" ] &&  cat "../shell/assets/shell.sh" > "$HOME/.oresoftware/shell.sh" && {
         echo "Successfully copied @oresoftware/shell/assets/shell.sh to $HOME/.oresoftware/shell.sh";
         exit 0;
     }
@@ -53,8 +60,8 @@ cat assets/shell.sh > "$HOME/.oresoftware/bash/read_json.sh" || {
 }
 
 mkdir -p "$HOME/.oresoftware/nodejs/node_modules" ||{
-  echo "could not copy read_json.sh shell file to user home." >&2;
-  exit 0;
+  echo "could not create complete dir path in user home." >&2;
+  exit 1;
 }
 
 
@@ -64,12 +71,19 @@ mkdir -p "$HOME/.oresoftware/nodejs/node_modules" ||{
        exit 0;
     fi
 
-    cat "node_modules/@oresoftware/shell/assets/shell.sh" > "$HOME/.oresoftware/shell.sh" && {
-       echo "Successfully copied @oresoftware/shell/assets/shell.sh to $HOME/.oresoftware/shell.sh";
+    json_file="node_modules/@oresoftware/shell/assets/package.json";
+    [ -f "$json_file" ] && cat "$json_file" > "$HOME/.oresoftware/nodejs/package.json" && {
+       echo "Successfully copied @oresoftware/shell/assets/package.json to $HOME/.oresoftware/nodejs/package.json";
        exit 0;
     }
 
-     curl -H 'Cache-Control: no-cache' \
+    json_file="../shell/assets/package.json";
+    [ -f "$json_file" ] && cat "$json_file" > "$HOME/.oresoftware/nodejs/package.json" && {
+       echo "Successfully copied @oresoftware/shell/assets/package.json to $HOME/.oresoftware/nodejs/package.json";
+       exit 0;
+    }
+
+    curl -H 'Cache-Control: no-cache' \
           "https://raw.githubusercontent.com/oresoftware/shell/master/assets/package.json?$(date +%s)" \
             --output "$HOME/.oresoftware/nodejs/package.json" 2> /dev/null  && {
 
@@ -85,7 +99,7 @@ mkdir -p "$HOME/.oresoftware/nodejs/node_modules" ||{
 
 
 echo "";
-echo -e "${gmx_green}read.json was installed successfully.${gmx_no_color}";
+echo -e "${gmx_green} => read.json was installed successfully.${gmx_no_color}";
 echo -e "Add the following line to your .bashrc/.bash_profile files:";
 echo -e "${gmx_cyan}. \"\$HOME/.oresoftware/shell.sh\"${gmx_no_color}";
 echo "";

@@ -6,6 +6,7 @@ import chalk from 'chalk';
 
 let jsonFile = process.argv[2];
 let keyv = process.argv[3] || '';
+const ignoreMissingProp = process.argv.indexOf('--ignore-missing') > 0;
 
 if (!jsonFile) {
   throw chalk.magentaBright.bold('read.json: Must pass a path to a json file as the first argument.');
@@ -32,11 +33,21 @@ catch (err) {
 
 const expression = `obj[keyv]`;
 try {
-  const value = eval(expression);
-  if(value === undefined){
+  let value = eval(expression);
+  if (value === undefined && !ignoreMissingProp) {
     throw 'read.json: Accessed value was undefined - missing property/path.'
   }
-  console.log(JSON.stringify(value));
+  else if (value === undefined) {
+    value = '';
+  }
+
+  if (value && typeof value === 'object') {
+    console.log(JSON.stringify(value));
+  }
+  else {
+    console.log(value);
+  }
+
 }
 catch (err) {
   console.error(chalk.magenta(`read.json: Could not evaluate expression - could not read property: "${keyv}".`));

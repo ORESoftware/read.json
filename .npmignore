@@ -1,6 +1,7 @@
 
 ### folders
 .docker.r2g
+.circleci
 node_modules
 scripts
 test
@@ -18,10 +19,13 @@ src
 .npmignore
 .travis.yml
 suman.conf.js
+.dockerignore
+Dockerfile*
 
 ### matching
 *.log
 *.md
-*.json
+tsconfig*.json
 *.DS_Store
+*.tgz
 
