@@ -1,5 +1,6 @@
 
 ### folders
+.docker.r2g
 node_modules
 scripts
 test
