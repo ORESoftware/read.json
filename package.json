@@ -1,11 +1,11 @@
 {
   "name": "@oresoftware/read.json",
-  "version": "0.0.101",
+  "version": "0.0.102",
   "description": "Semver-oriented TypeScript library skeleton.",
   "main": "dist/index.js",
   "bin": {
-    "read.json": "dist/cli.js",
-    "read_json": "dist/cli.js"
+    "read.json": "assets/cli.sh",
+    "read_json": "assets/cli.sh"
   },
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
@@ -29,7 +29,10 @@
     "url": "https://github.com/ORESoftware/read.json/issues"
   },
   "homepage": "https://github.com/ORESoftware/read.json#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@oresoftware/shell": "latest",
+    "chalk": "^2.4.1"
+  },
   "devDependencies": {
     "@types/core-js": "^0.9.46",
     "@types/node": "^9.6.2"
