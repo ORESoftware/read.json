@@ -1,6 +1,6 @@
 {
   "name": "@oresoftware/read.json",
-  "version": "0.0.106",
+  "version": "0.0.107",
   "description": "Semver-oriented TypeScript library skeleton.",
   "main": "dist/index.js",
   "bin": {
