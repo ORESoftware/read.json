@@ -31,14 +31,18 @@ catch (err) {
   throw err.message;
 }
 
-
-
 const keys = String(keyv).split('.').filter(Boolean);
 
 try {
 
   let result = keys.reduce(function (a, b) {
-    return a[b] || '';
+
+    if (a && typeof a === 'object') {
+      return a[b];
+    }
+
+    return '';
+
   }, obj);
 
   if (result && typeof result === 'object') {
@@ -50,7 +54,6 @@ try {
 catch (err) {
   console.error(err.message);
 }
-
 
 // const expression = `obj[keyv]`;
 // try {

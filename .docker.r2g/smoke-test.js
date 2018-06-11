@@ -28,5 +28,26 @@ const fs = require('fs');
 const EE = require('events');
 
 
+const k = cp.spawn('bash');
+
+k.stdin.end(
+  ` cd node_modules/@oresoftware/read.json; 
+    npm link -f; 
+    foo=$(read.json package.json 'name');
+    if [ "$foo" != "@oresoftware/read.json" ]; then
+       echo >&2 "foo is actually $foo instead...";
+       exit 1;
+    fi
+    
+   `
+);
+
+k.stderr.pipe(process.stderr);
+
+k.once('exit', function(code){
+  process.exit(code);
+});
+
+
 
 // your test goes here
