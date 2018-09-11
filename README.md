@@ -1,47 +1,60 @@
 
 
-# Your Project Readme Goes Here
+### @oresoftware/read.json
 
-This project is used by:
-https://github.com/oresoftware/ts-project
-You can use ts-project to do things more automatically.
+> A simple alternative to jq for bash/shell
+> Reads in JSON to stdin, and always writes JSON to stdout
 
-To do things more manually, continue on.
+### installation
 
-Steps to making this project skeleton your own project base.
-
-1. Clone this repo: <br>
-    `git clone https://github.com/ORESoftware/typescript-library-skeleton.git YOUR-PROJECT-NAME`
-2. Update package.json so that `name` property matches `YOUR-PROJECT-NAME`.
-3. Update other package.json fields so that they are accurate.
-
-To check to see if `YOUR-PROJECT-NAME` is available on NPM, uses this command at the command line:
-
-`$ npm view YOUR-PROJECT-NAME`  # will give you a 404 if the name is available.
+> npm i -g @oresoftware/read.json
 
 
-### This project skeleton uses:
+### Usage
 
-* the correct semver initial value (npm init defaults to 1.0.0 which is just wrong).
-* typescript 2.x
-* nodejs version 9
-* travis (for automated testing of your library)
-* MIT license
-* good simple default settings for .gitignore / .npmignore / .editorconfig / .gitattributes
-* Transpiling from src to dist folders (by default, you can change it manually)
+Given a foo.json file like so:
 
-
-To transpile files in place, instead of tranpiling from `'src'` to `'dist'`:
-
-<br>
-update tsconfig.json  (remove the `outDir` line):
-
-```json
-"compilerOptions": {
-    "outDir": "dist"    
+```json 
+{
+ "foo":{
+   "bar": {
+     "baz":"biz"
+  }
+ }
 }
+
 ```
 
-For small projects with just one .ts/.js file, you can just get rid of the src/lib folder, and put your index.ts
-file in the root of the project. In that case, make sure to change the `main` property in package.json from 'lib/index.js' to
-'index.js'. Same with the `typings/types` properties. 
+You can get 'biz' by running:
+
+```bash
+$ read_json -k 'foo.bar.baz' < foo.json
+```
+
+or equally like so:
+
+```bash
+$ read_json -k 'foo.bar.baz' -f  foo.json
+```
+
+<br>
+
+To pass an expression to evaluate, use:
+
+```bash
+$ read_json --eval "['foo']['bar']['baz']" -f  foo.json
+```
+
+<br>
+
+As a final example, if you run this:
+
+```bash
+$  cat foo.json | read_json
+```
+
+You will get this:
+
+```console
+{"foo":{"bar":{"baz":"biz"}}}
+```

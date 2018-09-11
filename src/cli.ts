@@ -1,59 +1,94 @@
-#!/usr/bin/env node
 'use strict';
 
 import path = require('path');
 import chalk from 'chalk';
+import {EVCb} from './index';
+import * as fs from 'fs';
 
-let jsonFile = process.argv[2];
-let keyv = process.argv[3] || '';
 const ignoreMissingProp = process.argv.indexOf('--ignore-missing') > 0;
 
-if (!jsonFile) {
-  throw chalk.magentaBright.bold('read.json: Must pass a path to a json file as the first argument.');
-}
+const keyIndex = process.argv.indexOf('-k');
 
-if (!path.isAbsolute(jsonFile)) {
-  jsonFile = path.resolve(process.cwd() + '/' + jsonFile);
-}
+let keyv = '';
 
-if (!keyv) {
-  throw chalk.magentaBright.bold('read.json: Must pass a keypath to read as the second argument.');
-}
-
-let obj = null;
-
-try {
-  obj = require(jsonFile);
-
-}
-catch (err) {
-  console.error(chalk.magenta('read.json: Could not load json file at path:'), chalk.magenta.bold(jsonFile));
-  throw err.message;
-}
-
-const keys = String(keyv).split('.').filter(Boolean);
-
-try {
-
-  let result = keys.reduce(function (a, b) {
-
-    if (a && typeof a === 'object') {
-      return a[b];
-    }
-
-    return '';
-
-  }, obj);
-
-  if (result && typeof result === 'object') {
-    result = JSON.stringify(result);
+if (keyIndex > 0) {
+  keyv = process.argv[keyIndex + 1];
+  if (!keyv) {
+    throw chalk.magentaBright.bold('read.json: Must pass a keypath to read as the second argument.');
   }
+}
 
-  console.log(result);
+
+const evalIndex = process.argv.indexOf('--eval');
+let evalExpression = '';
+
+if (evalIndex > 0) {
+  evalExpression = process.argv[evalIndex + 1];
+  if (!evalExpression) {
+    throw chalk.magenta('You passed --eval, but no subsequent argument was passed.');
+  }
 }
-catch (err) {
-  console.error(err.message);
-}
+
+const getFileData = (cb: EVCb<string>) => {
+  
+  const index = process.argv.indexOf('-f');
+  
+  if (index > 1) {
+    
+    let jsonFile = process.argv[index + 1];
+    
+    if (!path.isAbsolute(jsonFile)) {
+      jsonFile = path.resolve(process.cwd() + '/' + jsonFile);
+    }
+    
+    return fs.readFile(jsonFile, (err, data) => {
+      
+      if (err) {
+        console.error(chalk.magenta('read.json: Could not load json file at path:'), chalk.magenta.bold(jsonFile));
+        throw chalk.magenta(err.message);
+      }
+      
+      cb(null, String(data).trim());
+    });
+  }
+  
+  let stdout = '';
+  process.stdin.resume().on('data', d => {
+    stdout += String(d);
+  })
+  .once('end', () => {
+    cb(null, stdout);
+  });
+  
+};
+
+getFileData((err, data) => {
+  
+  if (err) {
+    throw err;
+  }
+  
+  let obj = JSON.parse(data);
+  
+  if (evalExpression) {
+    console.log(eval(`obj${evalExpression}`));
+    process.exit(0);
+  }
+  
+  const keys = String(keyv).split('.').filter(Boolean);
+  
+  while (obj && keys.length) {
+    obj = obj[keys.shift()];
+  }
+  
+  if (obj && typeof obj === 'object') {
+    obj = JSON.stringify(obj);
+  }
+  
+  console.log(obj || '');
+  process.exit(0);
+  
+});
 
 // const expression = `obj[keyv]`;
 // try {

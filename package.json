@@ -4,14 +4,14 @@
   "description": "Semver-oriented TypeScript library skeleton.",
   "main": "dist/index.js",
   "bin": {
-    "read.json": "assets/cli.sh",
-    "read_json": "assets/cli.sh"
+    "read.json": "cli/index.js",
+    "read_json": "cli/index.js"
   },
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "scripts": {
     "test": "suman test",
-    "postinstall": "./assets/postinstall.sh"
+    "postinstall": "assets/postinstall.sh"
   },
   "repository": {
     "type": "git",
