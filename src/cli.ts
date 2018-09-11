@@ -68,6 +68,7 @@ getFileData((err, data) => {
     throw err;
   }
   
+
   let obj = JSON.parse(data);
   
   if (evalExpression) {

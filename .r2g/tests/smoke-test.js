@@ -35,12 +35,11 @@ const k = cp.spawn('bash');
 k.stdin.end(
   ` cd node_modules/@oresoftware/read.json; 
     npm link -f; 
-    foo=$(read.json package.json 'name');
+    foo="$(read.json -f package.json -k 'name')";
     if [ "$foo" != "@oresoftware/read.json" ]; then
        echo >&2 "foo is actually $foo instead...";
        exit 1;
     fi
-    
    `
 );
 
