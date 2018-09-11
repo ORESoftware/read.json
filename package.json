@@ -1,6 +1,6 @@
 {
   "name": "@oresoftware/read.json",
-  "version": "0.0.107",
+  "version": "0.0.108",
   "description": "Semver-oriented TypeScript library skeleton.",
   "main": "dist/index.js",
   "bin": {
@@ -36,5 +36,8 @@
   "devDependencies": {
     "@types/core-js": "^0.9.46",
     "@types/node": "^9.6.2"
+  },
+  "r2g": {
+    "test": "echo 'r2g test is a noop for the moment.'"
   }
 }
