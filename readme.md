@@ -45,6 +45,14 @@ To pass an expression to evaluate, use:
 $ read_json --eval "['foo']['bar']['baz']" -f  foo.json
 ```
 
+note that if you have keys with dots in them, it's necessary to use the `--eval` technique:
+
+
+```bash
+$ read_json --eval "['foo.x.y']" -f  foo.json
+```
+
+
 <br>
 
 As a final example, if you run this:
