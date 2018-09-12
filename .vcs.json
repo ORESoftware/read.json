@@ -1,6 +1,6 @@
 {
   "git":{
-    "master":"master",
-    "integration":"dev"
+    "master":"remotes/origin/master",
+    "integration":"remotes/origin/dev"
   }
 }
