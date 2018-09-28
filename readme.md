@@ -1,4 +1,7 @@
 
+<br>
+
+[![Version](https://img.shields.io/npm/v/@oresoftware/read.json.svg?colorB=green)](https://www.npmjs.com/package/@oresoftware/read.json)
 
 ### @oresoftware/read.json
 
