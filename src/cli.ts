@@ -16,7 +16,6 @@ if (keyIndex > 0) {
   }
 }
 
-
 const evalIndex = process.argv.indexOf('--eval');
 let evalExpression = '';
 
@@ -28,65 +27,64 @@ if (evalIndex > 0) {
 }
 
 const getFileData = (cb: EVCb<string>) => {
-  
+
   const index = process.argv.indexOf('-f');
-  
+
   if (index > 1) {
-    
+
     let jsonFile = process.argv[index + 1];
-    
+
     if (!path.isAbsolute(jsonFile)) {
       jsonFile = path.resolve(process.cwd() + '/' + jsonFile);
     }
-    
+
     return fs.readFile(jsonFile, (err, data) => {
-      
+
       if (err) {
         console.error(chalk.magenta('read.json: Could not load json file at path:'), chalk.magenta.bold(jsonFile));
         throw chalk.magenta(err.message);
       }
-      
+
       cb(null, String(data).trim());
     });
   }
-  
+
   let stdout = '';
   process.stdin.resume().on('data', d => {
     stdout += String(d);
   })
-  .once('end', () => {
-    cb(null, stdout);
-  });
-  
+    .once('end', () => {
+      cb(null, stdout);
+    });
+
 };
 
 getFileData((err, data) => {
-  
+
   if (err) {
     throw err;
   }
-  
 
   let obj = JSON.parse(data);
-  
+
   if (evalExpression) {
-    console.log(eval(`obj${evalExpression}`));
-    process.exit(0);
+    obj = eval(`obj${evalExpression}`);
   }
-  
-  const keys = String(keyv).split('.').filter(Boolean);
-  
-  while (obj && keys.length) {
-    obj = obj[keys.shift()];
+  else {
+    const keys = String(keyv).split('.').filter(Boolean);
+
+    while (obj && keys.length) {
+      obj = obj[keys.shift()];
+    }
   }
-  
+
   if (obj && typeof obj === 'object') {
     obj = JSON.stringify(obj);
   }
-  
+
   console.log(obj || '');
   process.exit(0);
-  
+
 });
 
 
