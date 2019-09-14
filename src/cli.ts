@@ -2,7 +2,7 @@
 
 import path = require('path');
 import chalk from 'chalk';
-import {EVCb} from './index';
+import {EVCb} from './main';
 import * as fs from 'fs';
 
 const ignoreMissingProp = process.argv.indexOf('--ignore-missing') > 0;

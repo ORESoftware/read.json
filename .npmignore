@@ -1,8 +1,7 @@
 
 ### folders
-.docker.r2g
+.r2g
 .circleci
-node_modules
 scripts
 test
 .idea
@@ -25,7 +24,7 @@ Dockerfile*
 ### matching
 *.log
 *.md
-tsconfig*.json
+*.json
 *.DS_Store
 *.tgz
-
+*.yaml

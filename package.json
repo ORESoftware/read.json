@@ -1,14 +1,14 @@
 {
   "name": "@oresoftware/read.json",
-  "version": "0.0.109",
+  "version": "0.0.111",
   "description": "Semver-oriented TypeScript library skeleton.",
-  "main": "dist/index.js",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "typings": "dist/main.d.ts",
   "bin": {
     "read.json": "cli/index.js",
     "read_json": "cli/index.js"
   },
-  "types": "dist/index.d.ts",
-  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "suman test",
     "postinstall": "assets/postinstall.sh"
@@ -30,12 +30,11 @@
   },
   "homepage": "https://github.com/ORESoftware/read.json#readme",
   "dependencies": {
-    "@oresoftware/shell": "latest",
+    "@oresoftware/shell": "0.0.110",
     "chalk": "^2.4.1"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.46",
-    "@types/node": "^9.6.2"
+    "@types/node": "^12.7.5"
   },
   "r2g": {
     "test": "echo 'r2g test is a noop for the moment.'"
